@@ -1,0 +1,13 @@
+---
+title: "RIPPER"
+author: "MENG"
+date: "2018Äê2ÔÂ14ÈÕ"
+output: html_document
+---
+
+```{r}
+mushroom = read.csv('mushroom.txt', stringsAsFactors = T, header = F)
+str(mushroom)
+names(mushroom)
+```
+
