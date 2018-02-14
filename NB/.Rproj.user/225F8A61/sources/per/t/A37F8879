@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1518426434243.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "A37F8879",
+    "lastKnownWriteTime" : 7308604914264011873,
+    "last_content_update" : 1518426434243,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "8BBCBA3C",
+        "caption" : "sms",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=sms&cache_key=8BBCBA3C",
+        "displayedObservations" : 6032,
+        "environment" : "",
+        "object" : "sms",
+        "preview" : 0,
+        "totalObservations" : 6032,
+        "variables" : 2
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

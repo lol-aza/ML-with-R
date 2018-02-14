@@ -1,0 +1,74 @@
+---
+title: "MD"
+author: "MENG"
+date: "2018年2月13日"
+output: html_document
+---
+####读取数据
+```{r}
+credit <- read.csv("D:/rworkspace/ml/tree/credit.csv")
+str(credit)
+names(credit)
+```
+
+####观察数据
+-支票账户，小于0马克的有274人，大于200马克的有63人，1～200马克之间的有269人
+```{r}
+table(credit$checking_balance)
+```
+
+-储蓄账户余额小于100马克的有603人，大于1000马克的有48人，101-500马克之间的有103人，501～1000马克的有63人
+```{r}
+table(credit$savings_balance)
+```
+
+-贷款期限是4～72个月，中位数是18个月
+```{r}
+summary(credit$months_loan_duration)
+```
+
+-贷款金额250～18424马克之间，中位数是2320马克
+```{r}
+summary(credit$amount)
+```
+
+-违约的有30%
+```{r}
+table(credit$default)
+```
+
+
+####观察数据——创建随机的训练数据集和测试数据集
+90%作训练数据集， 10%作测试数据集
+
+数据集里数据的顺序
+```{r}
+set.seed(12345)
+credit_rand = credit[order(runif(1000)), ]
+credit_train = credit_rand[1:900, ]
+credit_test = credit_rand[901:1000, ]
+prop.table(table(credit_train$default))
+```
+
+```{r}
+prop.table(table(credit_test$default))
+
+```
+均衡的分割
+
+####基于数据训练模型
+```{r}
+library(C50)
+cre_tre_def = factor(credit_train$default)
+credit_model = C5.0(credit_train[-21],cre_tre_def)
+credit_model
+```
+samplee:案例
+predictiors特征数
+tree size：决策
+```{r}
+summary(credit_model)
+#1:no
+#2:yes
+```
+

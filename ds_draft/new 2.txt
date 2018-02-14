@@ -1,0 +1,85 @@
+>sms_raw = read.csv('file', stringsAsFactor = F)
+
+#载入文本挖掘的包tm
+>library(tm)
+
+#Corpus()函数创建了一个R对象来存储文本文档。
+#本例中存储到sms_corpus的对象中。
+#VectorSource()来指示函数Corpus()使用向量sms_train$text的信息。
+> sms_corpus <- Corpus(VectorSource(sms$text))
+
+#print()函数输出语料库
+> print(sms_corpus)
+
+
+#查看短信内容，第一二三条
+> inspect(sms_corpus[1:3])
+
+#大写变小写
+> corpus_clean <- tm_map(sms_corpus, tolower)
+#去掉数字
+> corpus_clean <- tm_map(corpus_clean, removeNumbers)
+#去掉停用词
+> corpus_clean <- tm_map(corpus_clean, removeWords, stopwords())
+#去掉标点
+> corpus_clean <- tm_map(corpus_clean, removePunctuation)
+#去掉空格
+> corpus_clean <- tm_map(corpus_clean, stripWhitespace)
+
+#创建一个稀疏矩阵，记录每个单词出现的词频
+> DocumentTermMatrix(corpus_clean) -> sms_dtm
+
+#将最初的数据框75%分做训练，25%分做测试
+> sms_raw_train <- sms[1:267,]
+> sms_raw_test <- sms[268: 569,]
+
+#输入文档-单词矩阵
+>sms_dtm_train <- sms_dtm[1:267,]
+>sms_dtm_test <- sms_dtm[268: 569,]
+
+#语料库
+sms_corpus_train <- corpus_clean[1:267]
+sms_corpus_test <- corpus_clean[268:569]
+
+#垃圾短信在训练集中的占比
+prop.table(table(sms_raw_train$type))
+
+#垃圾短信在测试集中的占比
+prop.table(table(sms_raw_test$type))  
+
+#在2个集合中的占比类似，说明垃圾短信被平均分在这两数据集中
+
+#加载词云包
+> library(wordcloud)
+
+#tm语料库对象直接创建词云
+wordcloud(sms_corpus_train, min.freq = 40, random.order = F)
+
+#垃圾短信子集
+spam <- subset(sms_raw_train, type == 'spam')
+#非垃圾短信子集
+ham <- subset(sms_raw_train, type == 'ham')
+
+
+wordcloud(spam$text, max.words = 40, scale = c(3, 0.5))
+wordcloud(ham$text, max.words = 40, scale = c(3, 0.5))
+
+
+
+#下面的语句会返回所有出现频率超过5次的单词，类型是characters ，
+#换句话说频率少于5次的单词会从数据字典sms_dict中剔除
+sms_dict <- findFreqTerms(sms_dtm_train, 5)
+#下面的语句会把数据集中所有频率超过5次的单词保存成新的数据集
+sms_train <- DocumentTermMatrix(sms_corpus_train, list(dictionary = sms_dict))
+sms_test  <- DocumentTermMatrix(sms_corpus_test, list(dictionary = sms_dict))
+
+#将计数转化成因子
+convert_counts <- function(x)
+{
+x = ifelse(x> 0, 1, 0)
+x = factor(x, levels = c(0, 1),labels = c(""No"", ""Yes""))
+return(x)
+}
+
+
+

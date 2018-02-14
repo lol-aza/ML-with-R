@@ -1,0 +1,606 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={NB},
+            pdfauthor={MENG},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+  \title{NB}
+  \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+  \author{MENG}
+  \preauthor{\centering\large\emph}
+  \postauthor{\par}
+  \predate{\centering\large\emph}
+  \postdate{\par}
+  \date{2018楠\textless{}9e\textgreater{}2閺\textless{}88\textgreater{}\textless{}88\textgreater{}13閺\textless{}83\textgreater{}}
+
+
+\begin{document}
+\maketitle
+
+\subsubsection{\texorpdfstring{step1 download dataset
+{[}link{]}（\url{http://www.dt.fee.unicamp.br/~tiago/smsspamcollection/}）}{step1 download dataset {[}link{]}（http://www.dt.fee.unicamp.br/\textasciitilde{}tiago/smsspamcollection/）}}\label{step1-download-dataset-linkhttpwww.dt.fee.unicamp.brtiagosmsspamcollection}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{setwd}\NormalTok{(}\StringTok{'d:/rworkspace/ml'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{step2 探索和准备数据}\label{step2-}
+
+读取数据到sms\_raw中
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(readr)}
+
+\NormalTok{sms_raw <-}\StringTok{ }\KeywordTok{read_delim}\NormalTok{(}\StringTok{"D:/rworkspace/ml/SMSSpamCollection.txt"}\NormalTok{, }\StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{, }\DataTypeTok{escape_double =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{trim_ws =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Parsed with column specification:
+## cols(
+##   type = col_character(),
+##   text = col_character()
+## )
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{str}\NormalTok{(sms_raw)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Classes 'tbl_df', 'tbl' and 'data.frame':    5572 obs. of  2 variables:
+##  $ type: chr  "ham" "ham" "spam" "ham" ...
+##  $ text: chr  "Go until jurong point, crazy.. Available only in bugis n great world la e buffet... Cine there got amore wat..." "Ok lar... Joking wif u oni..." "Free entry in 2 a wkly comp to win FA Cup final tkts 21st May 2005. Text FA to 87121 to receive entry question("| __truncated__ "U dun say so early hor... U c already then say..." ...
+##  - attr(*, "spec")=List of 2
+##   ..$ cols   :List of 2
+##   .. ..$ type: list()
+##   .. .. ..- attr(*, "class")= chr  "collector_character" "collector"
+##   .. ..$ text: list()
+##   .. .. ..- attr(*, "class")= chr  "collector_character" "collector"
+##   ..$ default: list()
+##   .. ..- attr(*, "class")= chr  "collector_guess" "collector"
+##   ..- attr(*, "class")= chr "col_spec"
+\end{verbatim}
+
+将sms\_raw的类型从字符型变量改成因子型变量
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sms_raw}\OperatorTok{$}\NormalTok{type <-}\StringTok{ }\KeywordTok{factor}\NormalTok{(sms_raw}\OperatorTok{$}\NormalTok{type)}
+\KeywordTok{str}\NormalTok{(sms_raw}\OperatorTok{$}\NormalTok{type)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  Factor w/ 2 levels "ham","spam": 1 1 2 1 1 2 1 1 2 2 ...
+\end{verbatim}
+
+用table查看type的数据，spam占比约13.4\%
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{table}\NormalTok{(sms_raw}\OperatorTok{$}\NormalTok{type)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  ham spam 
+## 4825  747
+\end{verbatim}
+
+\paragraph{处理和分析文本数据}
+
+Corpus():创建了一个R对象来存储文本文档
+VectorsSource():指示Corpus()函数使用向量sms\_raw\$text
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: NLP
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sms_corpus <-}\StringTok{ }\KeywordTok{Corpus}\NormalTok{(}\KeywordTok{VectorSource}\NormalTok{(sms_raw}\OperatorTok{$}\NormalTok{text))}
+\KeywordTok{print}\NormalTok{(sms_corpus)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## <<SimpleCorpus>>
+## Metadata:  corpus specific: 1, document level (indexed): 0
+## Content:  documents: 5572
+\end{verbatim}
+
+inspect():查看语料库的内容
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{inspect}\NormalTok{(sms_corpus[}\DecValTok{1}\OperatorTok{:}\DecValTok{3}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## <<SimpleCorpus>>
+## Metadata:  corpus specific: 1, document level (indexed): 0
+## Content:  documents: 3
+## 
+## [1] Go until jurong point, crazy.. Available only in bugis n great world la e buffet... Cine there got amore wat...                                            
+## [2] Ok lar... Joking wif u oni...                                                                                                                              
+## [3] Free entry in 2 a wkly comp to win FA Cup final tkts 21st May 2005. Text FA to 87121 to receive entry question(std txt rate)T&C's apply 08452810075over18's
+\end{verbatim}
+
+change upper letter to lower letter remove numbers remove stopwors()
+remove punctuation remove space between 2 words
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{corpus_clean =}\StringTok{ }\KeywordTok{tm_map}\NormalTok{(sms_corpus, tolower)}
+\NormalTok{corpus_clean =}\StringTok{ }\KeywordTok{tm_map}\NormalTok{(corpus_clean, removeNumbers)}
+\NormalTok{corpus_clean =}\StringTok{ }\KeywordTok{tm_map}\NormalTok{(corpus_clean, removeWords, }\KeywordTok{stopwords}\NormalTok{())}
+\NormalTok{corpus_clean =}\StringTok{ }\KeywordTok{tm_map}\NormalTok{(corpus_clean, removePunctuation)}
+\NormalTok{corpus_clean =}\StringTok{ }\KeywordTok{tm_map}\NormalTok{(corpus_clean, stripWhitespace)}
+\KeywordTok{inspect}\NormalTok{(corpus_clean[}\DecValTok{1}\OperatorTok{:}\DecValTok{3}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## <<SimpleCorpus>>
+## Metadata:  corpus specific: 1, document level (indexed): 0
+## Content:  documents: 3
+## 
+## [1] go jurong point crazy available bugis n great world la e buffet cine got amore wat                     
+## [2] ok lar joking wif u oni                                                                                
+## [3] free entry wkly comp win fa cup final tkts st may text fa receive entry questionstd txt ratetcs apply s
+\end{verbatim}
+
+通过\textbf{标记化}过程将消息分解成单个单词组成的组
+一个记号（token）就是一个文本字符串的单个元素，本例中token就是单词
+DocumentTermMatrix():
+将一个语料库作为输入，并创建一个\textbf{稀疏矩阵}的数据结构
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# 创建稀疏矩阵}
+\NormalTok{sms_dtm =}\StringTok{ }\KeywordTok{DocumentTermMatrix}\NormalTok{(corpus_clean)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  建立测试和训练数据集
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sms_raw_train <-}\StringTok{ }\NormalTok{sms_raw[}\DecValTok{1}\OperatorTok{:}\DecValTok{4825}\NormalTok{, ]}
+\NormalTok{sms_raw_test <-}\StringTok{ }\NormalTok{sms_raw[}\DecValTok{4826}\OperatorTok{:}\DecValTok{5572}\NormalTok{, ]}
+\end{Highlighting}
+\end{Shaded}
+
+输入文档-单词矩阵
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sms_dtm_train <-}\StringTok{ }\NormalTok{sms_dtm[}\DecValTok{1}\OperatorTok{:}\DecValTok{4825}\NormalTok{, ]}
+\NormalTok{sms_dtm_test <-}\StringTok{ }\NormalTok{sms_dtm[}\DecValTok{4826}\OperatorTok{:}\DecValTok{5572}\NormalTok{, ]}
+\end{Highlighting}
+\end{Shaded}
+
+最终语料库
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sms_corpus_train <-}\StringTok{ }\NormalTok{corpus_clean[}\DecValTok{1}\OperatorTok{:}\DecValTok{4825}\NormalTok{ ]}
+\NormalTok{sms_corpus_test <-}\StringTok{ }\NormalTok{corpus_clean[}\DecValTok{4826}\OperatorTok{:}\DecValTok{5572}\NormalTok{ ]}
+\end{Highlighting}
+\end{Shaded}
+
+ham和spam在test和train中占比差不多，说明分配比较均匀
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{prop.table}\NormalTok{(}\KeywordTok{table}\NormalTok{(sms_raw_train}\OperatorTok{$}\NormalTok{type))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##       ham      spam 
+## 0.8654922 0.1345078
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{prop.table}\NormalTok{(}\KeywordTok{table}\NormalTok{(sms_raw_test}\OperatorTok{$}\NormalTok{type))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##       ham      spam 
+## 0.8688086 0.1311914
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  可视化文本数据-词云 random.order=F: 顺序排列，词频越高，越接近中心
+  min.freq=40: 在至少40条短信中出现过
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(}\StringTok{'wordcloud'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: RColorBrewer
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{wordcloud}\NormalTok{(sms_corpus_train, }\DataTypeTok{min.freq =} \DecValTok{40}\NormalTok{, }\DataTypeTok{random.order =}\NormalTok{ F)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{NB_files/figure-latex/unnamed-chunk-13-1.pdf}
+
+在训练集中，对标签为spam和ham分别做图，进行比较。spam中，比较多的是free，prize，推测是垃圾信息
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{spam =}\StringTok{ }\KeywordTok{subset}\NormalTok{(sms_raw_train, type }\OperatorTok{==}\StringTok{ 'spam'}\NormalTok{)}
+\NormalTok{ham =}\StringTok{ }\KeywordTok{subset}\NormalTok{(sms_raw_train, type }\OperatorTok{==}\StringTok{ 'ham'}\NormalTok{)}
+\KeywordTok{wordcloud}\NormalTok{(spam}\OperatorTok{$}\NormalTok{text, }\DataTypeTok{max.words =} \DecValTok{40}\NormalTok{, }\DataTypeTok{scale =} \KeywordTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{, }\FloatTok{0.5}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): 'mbcsToSbcs'里转换'鎷
+## �2000'出错：<e6>代替了dot
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): 'mbcsToSbcs'里转换'鎷
+## �2000'出错：<8b>代替了dot
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): 'mbcsToSbcs'里转换'鎷
+## �2000'出错：<a2>代替了dot
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : 'mbcsToSbcs'里转换'鎷�2000'出错：<e6>代替了dot
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : 'mbcsToSbcs'里转换'鎷�2000'出错：<8b>代替了dot
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : 'mbcsToSbcs'里转换'鎷�2000'出错：<a2>代替了dot
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : Unicode字符U+62e2不带字体度量
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): 'mbcsToSbcs'里转换'鎷
+## �1000'出错：<e6>代替了dot
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): 'mbcsToSbcs'里转换'鎷
+## �1000'出错：<8b>代替了dot
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): 'mbcsToSbcs'里转换'鎷
+## �1000'出错：<a2>代替了dot
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : 'mbcsToSbcs'里转换'鎷�1000'出错：<e6>代替了dot
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : 'mbcsToSbcs'里转换'鎷�1000'出错：<8b>代替了dot
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : 'mbcsToSbcs'里转换'鎷�1000'出错：<a2>代替了dot
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : Unicode字符U+62e2不带字体度量
+\end{verbatim}
+
+\includegraphics{NB_files/figure-latex/unnamed-chunk-14-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{wordcloud}\NormalTok{(ham}\OperatorTok{$}\NormalTok{text, }\DataTypeTok{max.words =} \DecValTok{40}\NormalTok{, }\DataTypeTok{scale =} \KeywordTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{, }\FloatTok{0.5}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{NB_files/figure-latex/unnamed-chunk-14-2.pdf} 3.
+为频繁出现的单词创建指示特征 findFreqTerms():
+输入\textbf{文档-单词矩阵}， 返回一个字符向量
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# 参数5表示该向量中断的单词在矩阵中至少出现5次，类型是character}
+\NormalTok{sms_dict =}\StringTok{ }\KeywordTok{findFreqTerms}\NormalTok{(sms_dtm_train, }\DecValTok{5}\NormalTok{)}
+
+\CommentTok{#把数据集中所有频率超过5次的单词保存成新的数据集}
+\NormalTok{sms_train =}\StringTok{ }\KeywordTok{DocumentTermMatrix}\NormalTok{(sms_corpus_train, }\KeywordTok{list}\NormalTok{(}\DataTypeTok{dictionary =}\NormalTok{ sms_dict))}
+\NormalTok{sms_test =}\StringTok{ }\KeywordTok{DocumentTermMatrix}\NormalTok{(sms_corpus_test, }\KeywordTok{list}\NormalTok{(}\DataTypeTok{dictionary =}\NormalTok{ sms_dict))}
+\end{Highlighting}
+\end{Shaded}
+
+朴素贝叶斯分类器通常是训练具有明确特征的数据。
+因为稀疏矩阵中的元素表示一个单词出现的次数，我们需要将其改变成因子变量，根据单词是否出现，简单的表示为yes或者no
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# 自定义函数convert_counts()}
+\NormalTok{convert_counts =}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x)\{ }
+\NormalTok{  x =}\StringTok{ }\KeywordTok{ifelse}\NormalTok{(x}\OperatorTok{>}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{)  }\CommentTok{#x > 0, 用1替换，否则用0替换}
+\NormalTok{  x =}\StringTok{ }\KeywordTok{factor}\NormalTok{(x, }\DataTypeTok{levels =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{), }\DataTypeTok{labels =} \KeywordTok{c}\NormalTok{(}\StringTok{'"No"'}\NormalTok{, }\StringTok{'"Yes"'}\NormalTok{))}
+  \KeywordTok{return}\NormalTok{(x)}
+\NormalTok{  \}}
+\end{Highlighting}
+\end{Shaded}
+
+将convert\_counts()应用到每列稀疏矩阵。
+apply()来实现，而非for或者while循环
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#MARGIN = 1 按行，MARGIN = 2按列}
+\NormalTok{sms_train <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(sms_train, }\DataTypeTok{MARGIN =} \DecValTok{2}\NormalTok{, convert_counts)}
+\NormalTok{sms_test <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(sms_test, }\DataTypeTok{MARGIN =} \DecValTok{2}\NormalTok{, convert_counts)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{step3 基于数据训练模型}\label{step3-}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(e1071)}
+\NormalTok{sms_classifier =}\StringTok{ }\KeywordTok{naiveBayes}\NormalTok{(sms_train, sms_raw_train}\OperatorTok{$}\NormalTok{type)}
+\CommentTok{#class(sms_train)}
+\CommentTok{#class(sms_classifier)}
+\CommentTok{#class(sms_raw_train$type)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{step4 评估模型的性能}\label{step4-}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sms_test_pred =}\StringTok{ }\KeywordTok{predict}\NormalTok{(sms_classifier, sms_test)}
+\KeywordTok{class}\NormalTok{(sms_test_pred)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "factor"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(gmodels)}
+\KeywordTok{CrossTable}\NormalTok{(sms_test_pred, sms_raw_test}\OperatorTok{$}\NormalTok{type,}\DataTypeTok{prop.chisq =}\NormalTok{ F, }\DataTypeTok{prop.t =}\NormalTok{ F, }\DataTypeTok{dnn =} \KeywordTok{c}\NormalTok{(}\StringTok{'predicted'}\NormalTok{, }\StringTok{'actual'}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  
+##    Cell Contents
+## |-------------------------|
+## |                       N |
+## |           N / Row Total |
+## |           N / Col Total |
+## |-------------------------|
+## 
+##  
+## Total Observations in Table:  747 
+## 
+##  
+##              | actual 
+##    predicted |       ham |      spam | Row Total | 
+## -------------|-----------|-----------|-----------|
+##          ham |       647 |        12 |       659 | 
+##              |     0.982 |     0.018 |     0.882 | 
+##              |     0.997 |     0.122 |           | 
+## -------------|-----------|-----------|-----------|
+##         spam |         2 |        86 |        88 | 
+##              |     0.023 |     0.977 |     0.118 | 
+##              |     0.003 |     0.878 |           | 
+## -------------|-----------|-----------|-----------|
+## Column Total |       649 |        98 |       747 | 
+##              |     0.869 |     0.131 |           | 
+## -------------|-----------|-----------|-----------|
+## 
+## 
+\end{verbatim}
+
+\subsubsection{step5 提升模型性能}\label{step5-}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sms_classifier2 =}\StringTok{ }\KeywordTok{naiveBayes}\NormalTok{(sms_train, sms_raw_train}\OperatorTok{$}\NormalTok{type, }\DataTypeTok{laplace =} \DecValTok{1}\NormalTok{)}
+\NormalTok{sms_test_pred2 =}\StringTok{ }\KeywordTok{predict}\NormalTok{(sms_classifier2, sms_test)}
+\KeywordTok{CrossTable}\NormalTok{(sms_test_pred2, sms_raw_test}\OperatorTok{$}\NormalTok{type, }\DataTypeTok{prop.chisq =}\NormalTok{ F, }\DataTypeTok{prop.t =}\NormalTok{ F, }\DataTypeTok{prop.r=}\NormalTok{F, }\DataTypeTok{dnn =} \KeywordTok{c}\NormalTok{(}\StringTok{'predicted'}\NormalTok{,}\StringTok{'test'}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  
+##    Cell Contents
+## |-------------------------|
+## |                       N |
+## |           N / Col Total |
+## |-------------------------|
+## 
+##  
+## Total Observations in Table:  747 
+## 
+##  
+##              | test 
+##    predicted |       ham |      spam | Row Total | 
+## -------------|-----------|-----------|-----------|
+##          ham |       647 |        17 |       664 | 
+##              |     0.997 |     0.173 |           | 
+## -------------|-----------|-----------|-----------|
+##         spam |         2 |        81 |        83 | 
+##              |     0.003 |     0.827 |           | 
+## -------------|-----------|-----------|-----------|
+## Column Total |       649 |        98 |       747 | 
+##              |     0.869 |     0.131 |           | 
+## -------------|-----------|-----------|-----------|
+## 
+## 
+\end{verbatim}
+
+
+\end{document}

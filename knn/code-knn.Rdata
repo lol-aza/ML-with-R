@@ -1,0 +1,42 @@
+
+
+
+library(class)
+wbcd  = read.table('~./wdbc.txt', sep = ',', head = F)
+names(wbcd) = c('id','diagnosis','radius','texture','perimeter','area','smoothness', 'compactness','concavity','concave points','symmetry','fractal dimension', 'V14', 'V15', 'V16', 'V17', 'V18', 'V19', 'V20', 'V21', 'V22', 'V23', 'V24', 'V25', 'V26', 'V27', 'V28', 'V29', 'V30', 'V31','V32', 'V33')
+
+wbcd = wbcd[-1]
+
+
+# methord 1
+normalize = function(x) {
+x1 = x-min(x)
+x2 = max(x) -min(x)
+return(x1/x2)
+}
+
+wbcd_n = as.data.frame(lapply(wbcd[2:31], normalize ))
+
+
+
+wbcd_train = wbcd_n[1:469, ]
+wbcd_test = wbcd_n[470:569, ]
+wbcd_train_labels = wbcd[1:469, 1]
+wbcd_test_labels = wbcd[470:569, 1]
+
+wbcd_pred = knn(train = wbcd_train, test = wbcd_test, cl = wbcd_train_labels, k = 3)
+
+
+wbcd_test_pred = knn(train = wbcd_train, test = wbcd_test, cl = wbcd_train_labels, k = 21)
+
+CrossTable(x = wbcd_test_labels, y = wbcd_test_pred, prop.chisq = F)
+CrossTable(x = wbcd_test_labels, y = wbcd_pred , prop.chisq = F)
+
+#method 2
+wbcd_z = as.data.frame(scale(wbcd[-1])
+
+wbcd_train = wbcd_z[1:469, ]
+wbcd_test = wbcd_z[470:569, ]
+wbcd_test_pred = knn(train = wbcd_train, test = wbcd_test, cl = wbcd_train_labels, k =27)
+CrossTable(x = wbcd_test_labels, y = wbcd_test_pred, prop.chisq = F)
+

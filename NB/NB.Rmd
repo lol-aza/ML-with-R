@@ -1,0 +1,168 @@
+---
+title: "NB"
+author: "MENG"
+date: "2018楠<9e><b4>2閺<88><88>13閺<83><a5>"
+output:
+  word_document: default
+  html_document:
+    df_print: paged
+  pdf_document: default
+---
+### step1 download dataset [link]（http://www.dt.fee.unicamp.br/~tiago/smsspamcollection/）
+```{r}
+setwd('d:/rworkspace/ml')
+```
+### step2 探索和准备数据
+读取数据到sms_raw中
+```{r}
+library(readr)
+
+sms_raw <- read_delim("D:/rworkspace/ml/SMSSpamCollection.txt", "\t", escape_double = FALSE, trim_ws = TRUE)
+str(sms_raw)
+
+```
+将sms_raw的类型从字符型变量改成因子型变量
+```{r}
+sms_raw$type <- factor(sms_raw$type)
+str(sms_raw$type)
+```
+用table查看type的数据，spam占比约13.4%
+```{r}
+table(sms_raw$type)
+```
+#### 处理和分析文本数据
+Corpus():创建了一个R对象来存储文本文档
+VectorsSource():指示Corpus()函数使用向量sms_raw$text
+```{r}
+library(tm)
+sms_corpus <- Corpus(VectorSource(sms_raw$text))
+print(sms_corpus)
+```
+inspect():查看语料库的内容
+```{r}
+inspect(sms_corpus[1:3])
+```
+ 
+change upper letter to lower letter
+remove numbers
+remove stopwors()
+remove punctuation
+remove space between 2 words
+```{r}
+corpus_clean = tm_map(sms_corpus, tolower)
+corpus_clean = tm_map(corpus_clean, removeNumbers)
+corpus_clean = tm_map(corpus_clean, removeWords, stopwords())
+corpus_clean = tm_map(corpus_clean, removePunctuation)
+corpus_clean = tm_map(corpus_clean, stripWhitespace)
+inspect(corpus_clean[1:3])
+
+```
+
+通过**标记化**过程将消息分解成单个单词组成的组
+一个记号（token）就是一个文本字符串的单个元素，本例中token就是单词
+DocumentTermMatrix(): 将一个语料库作为输入，并创建一个**稀疏矩阵**的数据结构
+```{r}
+# 创建稀疏矩阵
+sms_dtm = DocumentTermMatrix(corpus_clean)
+
+```
+1. 建立测试和训练数据集
+```{r}
+sms_raw_train <- sms_raw[1:4825, ]
+sms_raw_test <- sms_raw[4826:5572, ]
+```
+输入文档-单词矩阵
+```{r}
+sms_dtm_train <- sms_dtm[1:4825, ]
+sms_dtm_test <- sms_dtm[4826:5572, ]
+```
+最终语料库
+```{r}
+sms_corpus_train <- corpus_clean[1:4825 ]
+sms_corpus_test <- corpus_clean[4826:5572 ]
+```
+
+ham和spam在test和train中占比差不多，说明分配比较均匀
+```{r}
+prop.table(table(sms_raw_train$type))
+prop.table(table(sms_raw_test$type))
+```
+2. 可视化文本数据-词云
+random.order=F: 顺序排列，词频越高，越接近中心
+min.freq=40: 在至少40条短信中出现过
+
+```{r}
+library('wordcloud')
+wordcloud(sms_corpus_train, min.freq = 40, random.order = F)
+```
+
+在训练集中，对标签为spam和ham分别做图，进行比较。spam中，比较多的是free，prize，推测是垃圾信息
+```{r}
+spam = subset(sms_raw_train, type == 'spam')
+ham = subset(sms_raw_train, type == 'ham')
+wordcloud(spam$text, max.words = 40, scale = c(3, 0.5))
+wordcloud(ham$text, max.words = 40, scale = c(3, 0.5))
+
+```
+3. 为频繁出现的单词创建指示特征
+findFreqTerms(): 输入**文档-单词矩阵**， 返回一个字符向量
+```{r}
+# 参数5表示该向量中断的单词在矩阵中至少出现5次，类型是character
+sms_dict = findFreqTerms(sms_dtm_train, 5)
+
+#把数据集中所有频率超过5次的单词保存成新的数据集
+sms_train = DocumentTermMatrix(sms_corpus_train, list(dictionary = sms_dict))
+sms_test = DocumentTermMatrix(sms_corpus_test, list(dictionary = sms_dict))
+```
+
+
+朴素贝叶斯分类器通常是训练具有明确特征的数据。
+因为稀疏矩阵中的元素表示一个单词出现的次数，我们需要将其改变成因子变量，根据单词是否出现，简单的表示为yes或者no
+```{r}
+# 自定义函数convert_counts()
+convert_counts = function(x){ 
+  x = ifelse(x>0, 1, 0)  #x > 0, 用1替换，否则用0替换
+  x = factor(x, levels = c(0, 1), labels = c('"No"', '"Yes"'))
+  return(x)
+  }
+ 
+```
+
+将convert_counts()应用到每列稀疏矩阵。
+apply()来实现，而非for或者while循环
+```{r}
+#MARGIN = 1 按行，MARGIN = 2按列
+sms_train <- apply(sms_train, MARGIN = 2, convert_counts)
+sms_test <- apply(sms_test, MARGIN = 2, convert_counts)
+```
+### step3 基于数据训练模型
+```{r}
+library(e1071)
+sms_classifier = naiveBayes(sms_train, sms_raw_train$type)
+#class(sms_train)
+#class(sms_classifier)
+#class(sms_raw_train$type)
+
+```
+### step4 评估模型的性能
+
+```{r}
+sms_test_pred = predict(sms_classifier, sms_test)
+class(sms_test_pred)
+```
+
+```{r}
+library(gmodels)
+CrossTable(sms_test_pred, sms_raw_test$type,prop.chisq = F, prop.t = F, dnn = c('predicted', 'actual'))
+```
+
+### step5 提升模型性能
+```{r}
+sms_classifier2 = naiveBayes(sms_train, sms_raw_train$type, laplace = 1)
+sms_test_pred2 = predict(sms_classifier2, sms_test)
+CrossTable(sms_test_pred2, sms_raw_test$type, prop.chisq = F, prop.t = F, prop.r=F, dnn = c('predicted','test'))
+
+```
+
+
+
